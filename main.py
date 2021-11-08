@@ -12,21 +12,89 @@
 
 # -- Load Packages for this script
 import pandas as pd
-import pandas as np
+import numpy as np
+import pickle
 
 # -- Load other scripts
 from data import fees_schedule, order_book
+from functions import data_criptomonedas
+from visualizations import *
 
 # Small test
-exchanges = ["bitfinex", "kraken"]
-symbol = 'BTC/EUR'
+exchanges = ['kraken','ftx','currencycom']  #'coinmate'
+symbol_e = 'BTC/EUR' 
+symbol_1 = 'DOGE/USD'
+symbol_2 = 'LTC/USD'
+symbol_3 = 'XRP/USD'
+
+#DOT1-USD  BNB/USD
+
 expected_volume = 0
 
 # Get fee schedule
 # fees = fees_schedule(exchange='kraken', symbol=symbol, expected_volume=expected_volume)
 
+
+######################### DOGE/USD ###################################
+
 # Massive download of OrderBook data
-# data = order_book(symbol=symbol, exchanges=exchanges, output='inplace', stop=None, verbose=True)
+data_1 = order_book(symbol=symbol_1, exchanges=exchanges, output='inplace', stop=None, verbose=True)
+
+# Guardar Diccionario
+data_cripto1 = data_criptomonedas(data_1,exchanges)
+dic_1 = open("dic_1.pkl", "wb")
+pickle.dump(data_cripto1, dic_1)
+dic_1.close()
+
+
+data_DOGEUSD = pd.DataFrame(data_cripto1)
+
+#Primera
+graficas_DOGEUSD= grf_criptomonedas(data_DOGEUSD)
+graficas_DOGEUSD.update_layout(title='Symbol DOG/USD')
+graficas_DOGEUSD.show()
+
+
+######################### LTC/USD ###################################
+
+# Massive download of OrderBook data
+data_2 = order_book(symbol=symbol_2, exchanges=exchanges, output='inplace', stop=None, verbose=True)
+
+# Guardar Diccionario
+data_cripto2 = data_criptomonedas(data_2,exchanges)
+dic_2 = open("dic_2.pkl", "wb")
+pickle.dump(data_cripto2, dic_2)
+dic_2.close()
+
+
+data_LTCUSD = pd.DataFrame(data_cripto2)
+
+#Primera
+graficas_LTCUSD= grf_criptomonedas(data_LTCUSD)
+graficas_LTCUSD.update_layout(title='Symbol DOG/USD')
+graficas_LTCUSD.show()
+
+######################### XRP/USD ###################################
+
+# Massive download of OrderBook data
+data_3 = order_book(symbol=symbol_3, exchanges=exchanges, output='inplace', stop=None, verbose=True)
+
+# Guardar Diccionario
+data_cripto3 = data_criptomonedas(data_3,exchanges)
+dic_3 = open("dic_3.pkl", "wb")
+pickle.dump(data_cripto3, dic_3)
+dic_3.close()
+
+
+data_XRPUSD = pd.DataFrame(data_cripto2)
+
+#Primera
+graficas_XRPUSD= grf_criptomonedas(data_XRPUSD)
+graficas_XRPUSD.update_layout(title='Symbol XRP/USD')
+graficas_XRPUSD.show()
+
+
+
 
 # Test
 # data['kraken'][list(data['kraken'].keys())[2]]
